@@ -25,7 +25,7 @@ ComplexNumber operator+(double s,const ComplexNumber &c){
 }
 
 ComplexNumber operator-(double s,const ComplexNumber &c){
-	return ComplexNumber(c.real-s,c.imag);
+	return ComplexNumber(c.real-s,-c.imag);
 }
 
 ComplexNumber ComplexNumber::operator+(const ComplexNumber &c){
@@ -36,19 +36,22 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-ComplexNumber operator*(double s,const ComplexNumber &c){
-	return ComplexNumber(c.real*s,c.imag);
+ComplexNumber operator*(double a, const ComplexNumber &c){
+	return ComplexNumber( (a*c.real), (a*c.imag));
 }
 
-ComplexNumber operator/(double s,const ComplexNumber &c){
-	return ComplexNumber(c.real/s,c.imag);
+ComplexNumber operator/(double a, const ComplexNumber &c){
+	return ComplexNumber(   (a*c.real) / (pow(c.real,2) + pow(c.imag,2))   
+						  , (-(a*c.imag)) / (pow(c.real,2) + pow(c.imag,2))  );
 }
 
 ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
-	return ComplexNumber(real*c.real,imag*c.imag);
+	return ComplexNumber( (real*c.real)-(imag*c.imag), (real*c.imag)+(imag*c.real) );
 }
+
 ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
-	return ComplexNumber(real/c.real,imag/c.imag);
+	return ComplexNumber(   ((real*c.real)+(imag*c.imag)) / (pow(c.real,2) + pow(c.imag,2))   
+						  , ((imag*c.real)-(real*c.imag)) / (pow(c.real,2) + pow(c.imag,2))  );
 }
 bool ComplexNumber::operator==(const ComplexNumber &c){
 	if(real == c.real && imag == c.imag) {return true;}
@@ -71,7 +74,7 @@ ostream & operator<<(ostream &os,const ComplexNumber &c){
 	if(c.imag == 0)return os <<c.real;
 	if(c.real != 0 && c.imag > 0)return os << c.real <<"+"<< c.imag <<"i";
 	if(c.real == 0 && c.imag == 0) return os<<"0";
-	return os<<NULL;
+	return os<<"";
 }
 
 int main(){
